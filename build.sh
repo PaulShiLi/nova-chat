@@ -298,7 +298,7 @@ if [[ $inDocker = false ]]; then
 
     setColor $Cyan
     print "Building Docker container...\n"
-    # sudo DOCKER_BUILDKIT=1 docker compose -f docker-compose.yml build
+    sudo DOCKER_BUILDKIT=1 docker compose -f docker-compose.yml build
     setColor $Color_Off
 
     print "- Docker container built"
@@ -338,15 +338,8 @@ echo $models | jq -r ".text | keys | .[]" | while read key; do
             rm -rf "tmp"
         fi
 
-        git init "tmp"
-        cd "tmp"
-
-        git remote add origin $origin
-        git pull origin main
-
-        # Remove everything except the model
-        rm -rf $(ls | grep -v $file)
-
+        GIT_LFS_SKIP_SMUDGE=1 git clone $origin ./tmp
+        cd tmp
         git lfs install
         git lfs pull -I $file
 
@@ -372,8 +365,8 @@ echo $models | jq -r ".embed | keys | .[]" | while read key; do
     # Lowercase the key and replace spaces with dashes
     name=$(echo $key | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
 
-    # If file exists, model is already installed
-    if [ -f "$modelPath/embed/$name" ]; then
+    # If dir exists, model is already installed
+    if [ -d "$modelPath/embed/$name" ]; then
         printAlreadyInstalled "$key"
     else
         origin=$(echo $value | jq -r ".origin")

@@ -3,11 +3,11 @@
     "port": 8000,
     "models": [
         {
-            "model": "models/mistral-7b/mistral-7b-v0.1.Q2_K.gguf",
+            "model": "models/text/mistral-7b/mistral-7b-v0.1.Q2_K.gguf",
             "model_alias": "mistral-7b_q2-k",
             "chat_format": "chatml",
             "n_gpu_layers": 0,
-            "offload_kqv": true,
+            "offload_kqv": false,
             "n_threads": 12,
             "n_batch": 512,
             "n_ctx": 2048

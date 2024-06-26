@@ -9,12 +9,13 @@ services:
       dockerfile: ./assets/docker/Dockerfile
     ports:
       - 8080:8080
+    expose:
+      - 8080
     volumes:
-      - .:/var/www/Jarvis"
-    # networks:
-    #   - jarvisNetwork
+      - .:/var/www/Nova-Platform"
     depends_on:
-    - nova-db
+    - nova-qdrant
+    - nova-llamacpp
   
 
   # Expose ports 
@@ -22,41 +23,33 @@ services:
     image: qdrant/qdrant:latest
     container_name: nova-db
     hostname: nova-db
-    environment:
-      - POSTGRES_USER=dev
-      - POSTGRES_PASSWORD=jarvis
-      - POSTGRES_DB=jarvis
-    build:
-      context: .
-      dockerfile: ./assets/docker/Dockerfile.db
+    restart: always
     ports:
       - 6333:6333
       - 6334:6334
+    expose:
+      - 6333
+      - 6334
+      - 6335
     volumes:
-      - ./assets/models:/data/models
-    restart: unless-stopped
-    # networks:
-    #   - jarvisNetwork
+      - ./assets/qdrant_data:/qdrant/storage
   
   nova-llamacpp:
-    image: ghcr.io/allenporter/llama-cpp-server-model-fetch:main
+    image: "ghcr.io/ggerganov/llama.cpp:server"
     container_name: nova-llamacpp
     hostname: nova-llamacpp
-    environment:
-      - POSTGRES_USER=dev
-      - POSTGRES_PASSWORD=jarvis
-      - POSTGRES_DB=jarvis
-    build:
-      context: .
-      dockerfile: ./assets/docker/Dockerfile.llama
+    command: >
+      -m data/models/text/mistral-7b/mistral-7b-v0.1.Q2_K.gguf
     ports:
       - 8000:8000
+    expose:
+      - 8000
     volumes:
-      - ./qdrant_data:/qdrant/storage
+      - ./assets:/data
     restart: unless-stopped
 
 
 networks:
-  jarvisNetwork:
+  novaNetwork:
     driver: bridge
     external: true

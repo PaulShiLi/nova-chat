@@ -1,5 +1,7 @@
 **/models/embed/*
 **/models/text/*
+**/qdrant_data/*
 
 !**/models/embed/.placeholder
 !**/models/text/.placeholder
+!**/qdrant_data/.placeholder
