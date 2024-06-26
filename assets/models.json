@@ -1,0 +1,14 @@
+{
+    "text": {
+        "Mistral 7B": {
+            "origin": "https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF",
+            "file": "mistral-7b-v0.1.Q2_K.gguf"
+        }
+    },
+    "embed": {
+        "GTE Base EN": {
+            "origin": "https://huggingface.co/Alibaba-NLP/gte-base-en-v1.5",
+            "embedding_size": "768"
+        }
+    }
+}

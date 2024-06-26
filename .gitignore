@@ -1,0 +1,5 @@
+**/models/embed/*
+**/models/text/*
+
+!**/models/embed/.placeholder
+!**/models/text/.placeholder

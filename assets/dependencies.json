@@ -1,0 +1,42 @@
+{
+    "Darwin": {
+        "brew": [
+            "/bin/bash -c '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)'"
+        ],
+        "jq": [
+            "brew install jq"
+        ],
+        "git": [
+            "brew install git"
+        ],
+        "git lfs": [
+            "brew install git-lfs"
+        ],
+        "docker": [
+            "wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/miniconda.sh",
+            "bash ~/miniconda.sh -b -p $HOME/miniconda"
+        ],
+        "docker-compose": [
+            "echo 'Docker Compose comes bundled with Docker Desktop. Please install Docker Desktop.'",
+            "exit 1"
+        ]
+    },
+    "Linux": {
+        "jq": [
+            "sudo apt-get install -y jq"
+        ],
+        "git": [
+            "sudo apt-get install -y git"
+        ],
+        "git lfs": [
+            "curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash",
+            "sudo apt-get install -y git-lfs"
+        ],
+        "docker": [
+            "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && echo 'deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin"
+        ],
+        "docker-compose": [
+            "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && echo 'deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null && sudo apt-get install -y docker-compose-plugin"
+        ]
+    }
+}

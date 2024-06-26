@@ -1,0 +1,62 @@
+version: '3.9'
+services:  
+  nova:
+    image: nikolaik/python-nodejs:python3.11-nodejs18
+    container_name: nova
+    hostname: nova
+    build:
+      context: .
+      dockerfile: ./assets/docker/Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/var/www/Jarvis"
+    # networks:
+    #   - jarvisNetwork
+    depends_on:
+    - nova-db
+  
+
+  # Expose ports 
+  nova-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: nova-db
+    hostname: nova-db
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=jarvis
+      - POSTGRES_DB=jarvis
+    build:
+      context: .
+      dockerfile: ./assets/docker/Dockerfile.db
+    ports:
+      - 6333:6333
+      - 6334:6334
+    volumes:
+      - ./assets/models:/data/models
+    restart: unless-stopped
+    # networks:
+    #   - jarvisNetwork
+  
+  nova-llamacpp:
+    image: ghcr.io/allenporter/llama-cpp-server-model-fetch:main
+    container_name: nova-llamacpp
+    hostname: nova-llamacpp
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=jarvis
+      - POSTGRES_DB=jarvis
+    build:
+      context: .
+      dockerfile: ./assets/docker/Dockerfile.llama
+    ports:
+      - 8000:8000
+    volumes:
+      - ./qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+
+networks:
+  jarvisNetwork:
+    driver: bridge
+    external: true
