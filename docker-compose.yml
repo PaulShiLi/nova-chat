@@ -1,5 +1,6 @@
 version: '3.9'
-services:  
+
+services:
   nova:
     image: nikolaik/python-nodejs:python3.11-nodejs18
     container_name: nova
@@ -12,13 +13,13 @@ services:
     expose:
       - 8080
     volumes:
-      - .:/var/www/Nova-Platform"
+      - .:/var/www/Nova-Platform
     depends_on:
-    - nova-qdrant
-    - nova-llamacpp
+      - nova-qdrant
+      - nova-llamacpp
+    networks:
+      - novaNetwork
   
-
-  # Expose ports 
   nova-qdrant:
     image: qdrant/qdrant:latest
     container_name: nova-db
@@ -33,9 +34,11 @@ services:
       - 6335
     volumes:
       - ./assets/qdrant_data:/qdrant/storage
+    networks:
+      - novaNetwork
   
   nova-llamacpp:
-    image: "ghcr.io/ggerganov/llama.cpp:server"
+    image: ghcr.io/ggerganov/llama.cpp:server
     container_name: nova-llamacpp
     hostname: nova-llamacpp
     command: >
@@ -47,9 +50,9 @@ services:
     volumes:
       - ./assets:/data
     restart: unless-stopped
-
+    networks:
+      - novaNetwork
 
 networks:
   novaNetwork:
     driver: bridge
-    external: true
