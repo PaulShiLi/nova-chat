@@ -43,6 +43,13 @@ services:
     hostname: nova-llamacpp
     command: >
       -m data/models/text/mistral-7b/mistral-7b-v0.1.Q2_K.gguf
+      --port 8000
+      --host 0.0.0.0
+      --threads 20
+      --mlock
+      --keep -1
+      --flash-attn
+      --cont-batching
     ports:
       - 8000:8000
     expose:

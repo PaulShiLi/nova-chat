@@ -381,3 +381,17 @@ echo $models | jq -r ".embed | keys | .[]" | while read key; do
 
 
 done
+
+#######################################
+
+printSection
+printHeader "Installing llama.cpp..."
+
+cd pkg
+if [ -d "llama.cpp" ]; then
+    rm -rf llama.cpp
+fi
+git clone https://github.com/ggerganov/llama.cpp.git
+cd llama.cpp
+make llama-server
+cd $rootDir
