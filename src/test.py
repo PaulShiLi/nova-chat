@@ -3,8 +3,8 @@ import requests
 import json
 import time
 
-client = OpenAI(base_url="https://0.0.0.0:8000/v1", api_key="")
-client2 = OpenAI(base_url="https://127.0.0.1:7999/v1", api_key="")
+client = OpenAI(base_url="http://0.0.0.0:8000/v1", api_key="")
+client2 = OpenAI(base_url="http://127.0.0.1:7999/v1", api_key="")
 
 def inference(text: str, endPoint: str = "http://localhost:8000"):
     with requests.post(
