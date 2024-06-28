@@ -1,8 +1,11 @@
 **/models/embed/*
 **/models/text/*
 **/qdrant_data/*
+**/pkg/*
+*llama.log
+
 
 !**/models/embed/.placeholder
 !**/models/text/.placeholder
 !**/qdrant_data/.placeholder
-*llama.log
+!**/pkg/wrapper
