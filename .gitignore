@@ -1,6 +1,7 @@
 **/models/embed/*
 **/models/text/*
 **/qdrant_data/*
+**/chroma/*
 **/pkg/*
 *llama.log
 
@@ -8,4 +9,5 @@
 !**/models/embed/.placeholder
 !**/models/text/.placeholder
 !**/qdrant_data/.placeholder
+!**/chroma/.placeholder
 !**/pkg/wrapper

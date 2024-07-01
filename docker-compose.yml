@@ -16,7 +16,7 @@ services:
       - .:/var/www/Nova-Platform
     depends_on:
       - nova-qdrant
-      - nova-llamacpp
+      # - nova-llamacpp
     networks:
       - novaNetwork
   
@@ -36,6 +36,17 @@ services:
       - ./assets/qdrant_data:/qdrant/storage
     networks:
       - novaNetwork
+  
+  # chroma:
+  #   image: ghcr.io/chroma-core/chroma:latest
+  #   volumes:
+  #     - ./assets/chroma:/chroma/.chroma/index
+  #   ports:
+  #     - 8000:8000
+  #   expose:
+  #     - 8000
+  #   networks:
+  #     - novaNetwork
   
   # Disable llama.cpp via Docker for now due to performance issues
   # nova-llamacpp:
