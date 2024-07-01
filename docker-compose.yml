@@ -37,16 +37,29 @@ services:
     networks:
       - novaNetwork
   
-  # chroma:
-  #   image: ghcr.io/chroma-core/chroma:latest
-  #   volumes:
-  #     - ./assets/chroma:/chroma/.chroma/index
-  #   ports:
-  #     - 8000:8000
-  #   expose:
-  #     - 8000
-  #   networks:
-  #     - novaNetwork
+  chroma:
+    image: chromadb/chroma:latest
+    build:
+      context: .
+      dockerfile: ./assets/docker/Dockerfile.chroma
+    volumes:
+      - ./assets/chroma:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
+      - ANONYMIZED_TELEMETRY=${ANONYMIZED_TELEMETRY:-TRUE}
+    ports:
+      - 8000:8000
+    expose:
+      - 8000
+    networks:
+      - novaNetwork
+    healthcheck: 
+        test: curl localhost:8000/api/v1/heartbeat || exit 1
+        interval: 10s
+        retries: 2
+        start_period: 5s
+        timeout: 10s
   
   # Disable llama.cpp via Docker for now due to performance issues
   # nova-llamacpp:
